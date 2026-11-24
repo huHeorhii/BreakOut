@@ -11,4 +11,10 @@ public class GameEngine
     {
         Balls.Add(new Ball(GameWidth/2, GameHeight/2));
     }
+
+    public void Update(float dt)
+    {
+        foreach (var ball in Balls)
+            ball.Move(dt);
+    }
 }

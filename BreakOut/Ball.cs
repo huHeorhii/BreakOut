@@ -2,13 +2,14 @@ namespace BreakOut;
 
 public class Ball
 {
+    //Responsible for the centre x and y coordinates of the circle
     private float _posX;
     private float _posY;
     
-    private float _velX;
-    private float _velY;
+    public const float DefaultXVel = 100;
+    public const float DefaultYVel = -100;
     
-    public const float DefaulRadius = 20;
+    public const float DefaultRadius = 20;
     
     public Ball(float posX, float posY)
     {
@@ -16,7 +17,7 @@ public class Ball
         PosY = posY;
     }
     
-    public float Radius { get; set; } = DefaulRadius;
+    public float Radius { get; set; } = DefaultRadius;
     
     public float PosX
     {
@@ -30,21 +31,13 @@ public class Ball
         set => _posY = value;
     }
 
-    public float VelX
-    {
-        get => _velX;
-        set => _velX = value;
-    }
+    public float VelX { get; set; } = DefaultXVel;
 
-    public float VelY
-    {
-        get => _velY;
-        set => _velY = value;
-    }
+    public float VelY { get; set; } = DefaultYVel;
 
-    public void Move()
+    public void Move(float dt)
     {
-        PosX += VelX;
-        PosY += VelY;
+        PosX += VelX * dt;
+        PosY += VelY * dt;
     }
 }
