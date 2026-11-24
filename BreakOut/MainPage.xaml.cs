@@ -2,22 +2,36 @@
 
 public partial class MainPage : ContentPage
 {
-    int count = 0;
+    private IDispatcherTimer _timer = null!;
+    private readonly GameEngine _engine = new GameEngine();
 
     public MainPage()
     {
         InitializeComponent();
+        
+        InitialiseTimer();
+        GameView.Drawable = new GameDrawable(_engine);
     }
 
-    private void OnCounterClicked(object? sender, EventArgs e)
+    private void InitialiseTimer()
     {
-        count++;
+        _timer = Dispatcher.CreateTimer();
+        _timer.Interval = TimeSpan.FromMilliseconds(200);
+        _timer.Tick += Tick;
+    }
 
-        if (count == 1)
-            CounterBtn.Text = $"Clicked {count} time";
+
+    private void Tick(object? sender, EventArgs e)
+    {
+        
+    }
+
+    public void ToggleTimer(object? sender, EventArgs e)
+    {
+        if (!(_timer.IsRunning)) _timer.Start();
         else
-            CounterBtn.Text = $"Clicked {count} times";
-
-        SemanticScreenReader.Announce(CounterBtn.Text);
+        {
+            _timer.Stop();
+        }
     }
 }
