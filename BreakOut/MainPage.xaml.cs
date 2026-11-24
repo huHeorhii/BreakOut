@@ -15,6 +15,7 @@ public partial class MainPage : ContentPage
         InitializeComponent();
         
         InitialiseTimer();
+
         GameView.Drawable = new GameDrawable(_engine);
     }
 

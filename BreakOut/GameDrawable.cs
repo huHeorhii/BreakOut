@@ -14,7 +14,7 @@ public class GameDrawable : IDrawable
 
     public void Draw(ICanvas canvas, RectF dirtyRect)
     {
-        if (dirtyRect.Height < 0 || dirtyRect.Width < 0) return;
+        if (dirtyRect.Height <= 0 || dirtyRect.Width <= 0) return;
         
         var balls = _engine.Balls;
         _scale = Math.Min(dirtyRect.Height/GameEngine.GameHeight, dirtyRect.Width/GameEngine.GameWidth);
