@@ -2,7 +2,7 @@ namespace BreakOut;
 
 public class Ball
 {
-    //Responsible for the centre x and y coordinates of the circle
+    // Responsible for the centre x and y coordinates of the circle
     private float _posX;
     private float _posY;
     
@@ -16,8 +16,6 @@ public class Ball
         PosX = posX;
         PosY = posY;
     }
-    
-    public float Radius { get; set; } = DefaultRadius;
     
     public float PosX
     {
@@ -35,6 +33,8 @@ public class Ball
 
     public float VelY { get; set; } = DefaultYVel;
 
+    public float Radius { get; set; } = DefaultRadius;
+    
     public void Move(float dt)
     {
         PosX += VelX * dt;

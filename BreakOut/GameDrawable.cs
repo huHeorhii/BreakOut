@@ -27,23 +27,43 @@ public class GameDrawable : IDrawable
         
         canvas.SaveState();
         
+        canvas.StrokeSize = 3;
+        canvas.StrokeColor = Colors.Black;
+        
         canvas.Translate(_tX, _tY);
         canvas.Scale(_scale, _scale);
         
         canvas.ClipRectangle(0, 0, GameEngine.GameWidth, GameEngine.GameHeight);
         canvas.FillColor = Colors.DeepSkyBlue;
         canvas.FillRectangle(0, 0, GameEngine.GameWidth, GameEngine.GameHeight);
-
-        canvas.FillColor = Colors.Red;
-        canvas.StrokeColor = Colors.Black;
-        canvas.StrokeSize = 3;
         
+        canvas.FillColor = Colors.Red;
         foreach (var ball in balls)
         {
             canvas.FillCircle(ball.PosX, ball.PosY, ball.Radius);
             canvas.DrawCircle(ball.PosX, ball.PosY, ball.Radius);
         }
         
+        canvas.FillColor = Colors.Pink;
+        canvas.FillRectangle(_engine.Paddle.Bounds);
+        canvas.DrawRectangle(_engine.Paddle.Bounds);
+        
         canvas.RestoreState();
+    }
+
+    public bool TryScreenToGame(PointF screenP, out PointF gameP)
+    {
+        if (_scale <= 0)
+        {
+            gameP = new PointF(0, 0);
+            return false;
+        }
+
+        var gX = (screenP.X - _tX) / _scale;
+        var gY = (screenP.Y - _tY) / _scale;
+        
+        gameP = new PointF(gX, gY);
+        
+        return true;
     }
 }

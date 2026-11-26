@@ -9,14 +9,17 @@ public partial class MainPage : ContentPage
     private IDispatcherTimer _timer = null!;
     private readonly GameEngine _engine = new();
     private readonly Stopwatch _stopwatch = new();
+    private readonly GameDrawable _drawable;
 
     public MainPage()
     {
         InitializeComponent();
         
         InitialiseTimer();
-
-        GameView.Drawable = new GameDrawable(_engine);
+        
+        _drawable = new GameDrawable(_engine);
+        GameView.Drawable = _drawable;
+        InitialiseGameView();
     }
 
     protected override void OnAppearing()
@@ -31,6 +34,20 @@ public partial class MainPage : ContentPage
         base.OnDisappearing();
         _timer.Stop();
         _stopwatch.Stop();
+    }
+
+    private void OnPointerMove(object? sender, TouchEventArgs e)
+    {
+        if (e.Touches.Length == 0) return;
+        if (_drawable.TryScreenToGame(e.Touches[0], out PointF position))
+            _engine.MovePaddleTo(position.X);
+    }
+
+    private void InitialiseGameView()
+    {
+        GameView.StartInteraction += OnPointerMove;
+        GameView.DragInteraction += OnPointerMove;
+        GameView.MoveHoverInteraction += OnPointerMove;
     }
 
     private void InitialiseTimer()

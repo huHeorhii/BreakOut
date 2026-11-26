@@ -4,8 +4,9 @@ public class GameEngine
 {
     public const float GameWidth = 450;
     public const float GameHeight = 800;
-
+    
     public List<Ball> Balls { get; } = new();
+    public Paddle Paddle { get; } = new(GameWidth / 2, GameHeight - 100);
 
     public GameEngine()
     {
@@ -66,5 +67,12 @@ public class GameEngine
             ball.VelY = (Random.Shared.NextSingle() + 1) * 100 * dirY;
             Balls.Add(ball);
         }
+    }
+
+    public void MovePaddleTo(float x)
+    {
+        x = Math.Clamp(x, Paddle.Width / 2, GameWidth - Paddle.Width / 2);
+        
+        Paddle.PosX = x;
     }
 }
